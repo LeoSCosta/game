@@ -1,0 +1,107 @@
+package Jogo2D;
+
+
+import javax.swing.*;
+
+
+
+public class MostroDemonio extends JLabel  {
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	ImageIcon imagemCorrendoDireita =new ImageIcon (getClass().getResource("Demonio Bocudo Correndo Direita.gif"));
+	ImageIcon imagemCorrendoEsquerda =new ImageIcon (getClass().getResource("Demonio Bocudo Correndo Esquerda.gif"));
+	ImageIcon imagemParadoDireita =new ImageIcon (getClass().getResource("Demonio Bocudo ParadoDireita.gif"));
+	ImageIcon imagemParadoEsqueda =new ImageIcon (getClass().getResource("Demonio Bocudo ParadoEsqueda.gif"));
+	
+	
+		
+	 private int largura, altura, posx, posy, direcaoX, direcaoY, ultimaDirecao,velocidade;
+	 private boolean atak;
+	 private Hit hitBox = new Hit();
+	 
+	 public MostroDemonio(int x, int y, int largura, int altura ) {
+
+		 this.largura = largura;
+		 this.altura = altura;
+		 this.posx = x;
+		 this.posy = y;
+			
+		 this.direcaoX = 0;
+		 this.ultimaDirecao = 1;
+		 this.velocidade =1;			
+		 setIcon(imagemParadoDireita);			
+		 setBounds(posx, posy, largura, altura);
+		 this.hitBox.mover(x, y, largura, altura);
+		 
+	 }
+	 
+	 public void atualiza() {
+		 perseguir(500,500);
+		 setBounds(posx, posy, largura, altura);
+		 System.out.println(posx);
+		 posx ++;
+	 }
+	 
+	 
+	 public void perseguir (int x,int y) {
+		 
+		 int somaX = 0;
+		 int somaY = 0;
+		 
+		 if (x <posx) {
+				 
+			 somaX = - velocidade;
+			 direcaoX = -1;
+				 
+			 setIcon(imagemCorrendoEsquerda);
+				 
+				 
+		 }
+			 
+		 if (x >posx) {
+			 		
+			 somaY = - velocidade;
+			 direcaoX = 1;
+			 setIcon(imagemCorrendoEsquerda);
+				 
+		 }
+		 if (y <posy) {
+					 
+			 somaY= - velocidade;
+					 
+				 
+		 }
+			 	
+		 if (y >posy) {
+					 
+			 somaY= + velocidade;
+					 
+				 
+		 }
+			 	
+		 posx += somaX;
+		 posy += somaY;
+			 	
+		 setBounds(posx, posy, largura, altura);
+
+		 
+		 if (direcaoX == 1) {
+			 
+			 setIcon(imagemParadoDireita);
+		 }
+		 else  setIcon(imagemParadoDireita);
+		 
+		 
+	 }	 
+
+
+
+
+	
+	
+}

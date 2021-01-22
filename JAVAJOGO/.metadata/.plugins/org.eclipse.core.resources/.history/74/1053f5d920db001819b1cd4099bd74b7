@@ -1,0 +1,84 @@
+package Jogo2D;
+
+import javax.swing.JFrame;
+
+public class Jogo extends JFrame implements Runnable{
+	public MostroDemonio Demonio;
+	public MostroZumbi Zumbi;
+	public MonstroOrc Orc1;
+	public RodolfoHeroi Rodolfo;
+	public int milisegundo =1000;
+	public Cenario Cenario1;
+
+
+
+	public Jogo()	{
+
+		Zumbi = new MostroZumbi();
+		Demonio = new MostroDemonio(200, 200, 32, 34);
+		Cenario1 = new Cenario();
+		Rodolfo = new RodolfoHeroi(500, 500, 32, 32 );
+		Orc1 = new MonstroOrc();
+		janela( );
+		addobjetos ();
+		addKeyListener(Rodolfo);
+		Thread t = new Thread(this);
+		t.start();
+
+
+	}
+	public void atualiza() {
+		//Demonio.atualiza();
+		//Orc1.atualiza();
+		Rodolfo.atualiza();
+		System.out.println(Rodolfo.posx + "," + Rodolfo.posy);
+		Orc1.perseguir(Rodolfo.posx, Rodolfo.posy);
+	}
+
+
+
+	public  void addobjetos () {
+		add(Zumbi);
+		add(Demonio);
+		add(Orc1);
+		add(Rodolfo);
+		add(Cenario1);
+	}
+
+
+
+	public void janela( ) {
+
+		setDefaultCloseOperation (EXIT_ON_CLOSE);
+		setSize(1000,1000);
+		setVisible(true);
+		setLayout(null);
+		add(Zumbi);
+		add(Demonio);
+		add(Orc1);
+		add(Rodolfo);
+		add(Cenario1);
+	}
+
+
+
+	@Override
+	public void run() {
+		while(milisegundo > 0) {
+			
+			
+			atualiza();
+			
+			
+			try {
+				Thread.sleep(milisegundo);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+
+}

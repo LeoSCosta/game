@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+C:\Users\Leo\Documents\Ciências da Computação\Worksapce JAVA\GAME\JAVAJOGO\.metadata\.plugins\org.eclipse.jdt.core
+2068996154.index

@@ -1,0 +1,145 @@
+package Jogo2D;
+
+
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+
+public class Jogo extends JFrame implements Runnable{
+	public MostroDemonio Demonio;
+	public MostroZumbi Zumbi;
+	public MonstroOrc orc1;
+	public RodolfoHeroi Rodolfo;
+	public double milisegundo =50;
+	public Cenario Cenario1;
+	private boolean danoD, danoArmaD;
+	private boolean danoO, danoArmaO;
+	private int pontuacao;
+	private JLabel placar;
+
+
+	public Jogo()	{
+		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		Zumbi = new MostroZumbi( 400 , 200);
+		Demonio = new MostroDemonio(198 , -4);
+		Cenario1 = new Cenario();
+		Rodolfo = new RodolfoHeroi(400, 200, 30, 32 );
+		orc1 = new MonstroOrc(400,200);
+		placar = new JLabel();
+		
+		janela( );
+		addobjetos ();
+		addKeyListener(Rodolfo);
+		Thread t = new Thread(this);
+		t.start();
+		
+
+	}
+	public void atualiza() {
+
+		
+		//RODOLFO_________________________________________________________________________
+		
+		Rodolfo.atualiza(danoD, danoO);
+		pontuacao = Demonio.getPonto() + orc1.getPonto();
+		placar.setText(Integer.toString(pontuacao));
+		System.out.println(pontuacao);
+		
+		
+		
+		
+
+		
+		
+		// Demonio______________________________________________________________________
+		
+		Demonio.atualiza(Rodolfo.getPosx(), Rodolfo.getPosy(), danoArmaD, danoD);
+		
+		if(Rodolfo.getHitBox().dano(Demonio.getHitbox())) {
+			Rodolfo.recuar(Demonio.getX(),Demonio.getY());
+			danoD = true;
+		}
+		else danoD = false;
+		
+		if(Rodolfo.isAtacando()) {
+			if(Rodolfo.getArma().dano(Demonio.getHitbox())){
+				danoArmaD = true;
+				System.out.println("CONTATOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				
+			}
+		}
+		
+		else danoArmaD = false;
+		
+		
+		
+		
+		// ORC______________________________________________________________________
+		
+		orc1.atualiza(Rodolfo.getPosx(), Rodolfo.getPosy(), danoArmaO, danoO);
+		
+		if(Rodolfo.getHitBox().dano(orc1.getHitbox())) {
+			Rodolfo.recuar(orc1.getX(),orc1.getY());
+			danoO = true;
+		}
+		else danoO = false;
+		
+
+		
+		if(Rodolfo.isAtacando()) {
+			if(Rodolfo.getArma().dano(orc1.getHitbox())){
+				danoArmaO = true;
+				System.out.println("CONTATOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				
+			}
+		}
+		else danoArmaO = false;
+		
+		
+	}
+
+
+
+
+
+
+	public  void addobjetos () {
+		add(Zumbi);
+		add(Demonio);
+		add(orc1);
+		add(Rodolfo);
+		add(Cenario1);
+		add(placar);
+	}
+
+
+
+	public void janela( ) {
+
+		setDefaultCloseOperation (EXIT_ON_CLOSE);
+		setSize(800,400);
+		setVisible(true);
+		setLayout(null);
+	
+	}
+
+
+
+	@Override
+	public void run() {
+		while(milisegundo > 0) {
+			atualiza();
+			try {
+				Thread.sleep((long) milisegundo);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+
+}

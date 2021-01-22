@@ -1,0 +1,18 @@
+package Jogo2D;
+import javax.swing.JFrame;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		JFrame janela = new JFrame("Jogo");
+		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setSize(1200, 700);  
+		Jogo jogo = new Jogo();
+		jogo.setVisible(true);
+		janela.add(jogo);
+		janela.setVisible(true);
+
+	}
+
+}

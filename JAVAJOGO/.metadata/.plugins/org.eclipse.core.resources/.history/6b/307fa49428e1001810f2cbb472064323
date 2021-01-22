@@ -1,0 +1,111 @@
+package Jogo2D;
+
+
+
+import javax.swing.JFrame;
+
+public class Jogo extends JFrame implements Runnable{
+	public MostroDemonio Demonio;
+	public MostroZumbi Zumbi;
+	public MonstroOrc Orc1;
+	public RodolfoHeroi Rodolfo;
+	public double milisegundo =50;
+	public Cenario Cenario1;
+	private boolean dano, danoArma;
+
+
+
+	public Jogo()	{
+
+		Zumbi = new MostroZumbi( 400 , 200);
+		Demonio = new MostroDemonio(200, 200, 32, 34);
+		Cenario1 = new Cenario();
+		Rodolfo = new RodolfoHeroi(400, 200, 30, 32 );
+		Orc1 = new MonstroOrc(400,200);
+		janela( );
+		addobjetos ();
+		addKeyListener(Rodolfo);
+		Thread t = new Thread(this);
+		t.start();
+		
+
+	}
+	public void atualiza() {
+
+		Rodolfo.atualiza(dano);
+		
+		Demonio.atualiza(Rodolfo.getPosx(), Rodolfo.getPosy());
+		Orc1.atualiza(Rodolfo.getPosx(), Rodolfo.getPosy(), danoArma, dano);
+		Zumbi.atualiza(Rodolfo.getPosx(), Rodolfo.getPosy());
+
+		if(Rodolfo.getHitBox().dano(Zumbi.getHitBox())) {
+      
+			dano = true;
+		}
+		else dano = false;
+
+		if(Rodolfo.getHitBox().dano(Orc1.getHitbox())) {
+			Rodolfo.recuar(Orc1.getX(),Orc1.getY());
+			dano = true;
+		}
+		else dano = false;
+		
+
+		if(Rodolfo.isAtacando()) {
+			if(Rodolfo.getArma().dano(Orc1.getHitbox())){
+				danoArma = true;
+				System.out.println("CONTATOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+				
+			}
+		}
+		else danoArma = false;
+		
+		
+	}
+
+
+
+
+
+
+	public  void addobjetos () {
+		add(Zumbi);
+		add(Demonio);
+		add(Orc1);
+		add(Rodolfo);
+		add(Cenario1);
+	}
+
+
+
+	public void janela( ) {
+
+		setDefaultCloseOperation (EXIT_ON_CLOSE);
+		setSize(900,500);
+		setVisible(true);
+		setLayout(null);
+		add(Zumbi);
+		add(Demonio);
+		add(Orc1);
+		add(Rodolfo);
+		add(Cenario1);
+	}
+
+
+
+	@Override
+	public void run() {
+		while(milisegundo > 0) {
+			atualiza();
+			try {
+				Thread.sleep((long) milisegundo);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+
+}

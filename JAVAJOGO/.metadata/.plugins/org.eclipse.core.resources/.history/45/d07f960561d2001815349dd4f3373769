@@ -1,0 +1,160 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.SortedMap;
+
+import javax.swing.*;
+
+
+public class jogo extends JFrame {
+	ImageIcon P1 = new ImageIcon (getClass().getResource("frame-01 - P.gif"));
+	ImageIcon P2 = new ImageIcon (getClass().getResource("frame-01.gif"));
+	ImageIcon P3 = new ImageIcon (getClass().getResource("frame-01 (1).gif"));
+	ImageIcon P4 = new ImageIcon (getClass().getResource("frame-16.gif"));
+	
+	JLabel LP1= new JLabel (P1);
+	
+	int posicaoP1X=0;
+	int posicaoP1Y=200;
+
+	int gravidade= 1;
+	int alturaPulo = 10;
+	
+
+	
+	public jogo() {		
+		
+		editarObjetos();
+		janela();
+		addMovimento();
+		pulo();
+	
+	}
+	
+	
+	public void pulo ()
+	{
+		
+		int alturaatual = LP1.getY();
+		int alurapulo = 20;
+		int paraoulo = alturaatual+alurapulo;
+		
+		
+		
+		while (alturaatual < paraoulo) {
+			
+				alturaatual += 1;
+				
+				LP1.setBounds(LP1.getX(), alturaatual, 50, 50);
+				
+				}
+		
+	}
+	
+	
+	public void addMovimento() {
+	
+		
+		addKeyListener(new KeyListener() {
+			
+			int somaX = 0;	
+			
+			public void keyPressed(KeyEvent e) {
+				
+				int codigotelca = e.getKeyCode();
+				
+				if(codigotelca == KeyEvent.VK_UP) {
+					
+					pulo ();
+					
+			
+				}
+				if(codigotelca == KeyEvent.VK_DOWN) { 
+				}
+				
+				if(codigotelca == KeyEvent.VK_LEFT) {
+					
+					somaX = -10;
+					
+				}
+				
+				
+				if(codigotelca == KeyEvent.VK_RIGHT) {
+					
+					somaX = +10;
+				}
+				
+				
+				posicaoP1X += somaX;
+				
+				
+				LP1.setBounds(posicaoP1X, LP1.getY(), 50, 50);
+			}
+
+			
+			public void keyReleased(KeyEvent e) {
+				
+				int codigotelca = e.getKeyCode();
+				
+				LP1.setIcon(P1);
+			
+				if(codigotelca == KeyEvent.VK_UP) {
+					
+				}
+				if(codigotelca == KeyEvent.VK_DOWN) { 
+				}
+				
+				if(codigotelca == KeyEvent.VK_LEFT) {
+					
+					somaX = 0;
+					
+				}
+				
+				
+				if(codigotelca == KeyEvent.VK_RIGHT) {
+					
+					somaX = 0;
+				}
+				
+		
+				
+			}
+
+			
+			public void keyTyped(KeyEvent e) {
+				
+			
+			}
+
+	
+		});
+		
+
+			
+	
+				
+		
+	}
+	
+
+			
+	
+	public void editarObjetos() {
+		LP1.setBounds(posicaoP1X,posicaoP1Y, 50,50);
+	}
+	
+	public void janela( ) {
+		setDefaultCloseOperation (EXIT_ON_CLOSE);
+		setSize(1000,1000);
+		setLocationRelativeTo(null);
+		setVisible(true);
+		setLayout(null);
+		add(LP1);
+		addMovimento();
+		
+	}
+	
+	public static void main (String [] args) {
+		new jogo ();
+	}
+}
+

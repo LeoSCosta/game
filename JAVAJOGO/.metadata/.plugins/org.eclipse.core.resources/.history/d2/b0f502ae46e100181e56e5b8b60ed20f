@@ -1,0 +1,19 @@
+package Jogo2D;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		JPanel painel = new JPanel();
+		painel.setSize(1200, 700);  
+		Jogo jogo = new Jogo();
+		painel.add(jogo);
+		jogo.setVisible(true);  
+		painel.setVisible(true);
+	
+
+	}
+
+}

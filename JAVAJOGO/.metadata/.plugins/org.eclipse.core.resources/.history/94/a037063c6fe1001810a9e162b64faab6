@@ -1,0 +1,111 @@
+package Jogo2D;
+
+
+import javax.swing.*;
+
+
+
+public class MostroZumbi extends JLabel  {
+
+
+	ImageIcon imagemCorrendoDireita =new ImageIcon (getClass().getResource("Zumbis Miolos Verdes Correndo Direita.gif"));
+	ImageIcon imagemCorrendoEsquerda =new ImageIcon (getClass().getResource("Zumbis Miolos Verdes Correndo Esquerda.gif"));
+	ImageIcon imagemParadoDireita =new ImageIcon (getClass().getResource("Zumbis Miolos Verdes Parado Direita.gif"));
+	ImageIcon imagemParadoEsqueda =new ImageIcon (getClass().getResource("Zumbis Miolos Verdes Parado Esquerda.gif"));
+
+
+	private Hit hitBox = new Hit();
+	private int largura, altura, posx, posy, direcaoX, direcaoY, ultimaDirecao,velocidade;
+	boolean atak;
+	
+	public Hit getHitBox() {
+		return hitBox;
+	}
+
+
+	public void setHitBox(Hit hitBox) {
+		this.hitBox = hitBox;
+	}
+
+
+	public MostroZumbi(int x, int y) {
+
+		largura = 32;
+		altura = 34;
+
+		posx = (x);
+		posy = (y);
+
+		direcaoX = 0;
+
+
+		ultimaDirecao = 1;
+		velocidade =1;
+
+		setIcon(imagemParadoDireita);
+		this.hitBox.mover(x, y, largura, altura);
+		setBounds(posx, posy, largura, altura);
+	}
+
+
+	public void perseguir (int x,int y) {
+
+		int somaX = 0;
+		int somaY = 0;
+
+		if (x <posx) {
+
+			somaX = - velocidade;
+			direcaoX = -1;
+
+			setIcon(imagemCorrendoEsquerda);
+
+
+		}
+
+		if (x >posx) {
+
+			somaY = + velocidade;
+			direcaoX = 1;
+			setIcon(imagemCorrendoEsquerda);
+
+		}
+		if (y <posy) {
+
+			somaY= - velocidade;
+
+
+		}
+
+		if (y >posy) {
+
+			somaY= + velocidade;
+
+
+		}
+
+		posx += somaX;
+		posy += somaY;
+
+		setBounds(posx, posy, largura, altura);
+
+
+		if (direcaoX == 1) {
+
+			setIcon(imagemParadoDireita);
+		}
+		else  setIcon(imagemParadoDireita);
+	}	 
+
+
+
+
+
+	public void atualiza(int x, int y) {
+		perseguir(x,y);
+		setBounds(posx, posy, largura, altura);
+		hitBox.mover(posx, posy, largura, altura);
+
+	}
+
+}

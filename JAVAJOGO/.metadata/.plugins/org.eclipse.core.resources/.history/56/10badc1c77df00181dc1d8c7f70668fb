@@ -1,0 +1,106 @@
+package Jogo2D;
+
+public class Hit {
+
+	private int x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+	private Hit arma = new Hit();
+	
+	public int getX0() {
+		return x0;
+	}
+
+	public void setX0(int x0) {
+		this.x0 = x0;
+	}
+
+	public int getX1() {
+		return x1;
+	}
+
+	public void setX1(int x1) {
+		this.x1 = x1;
+	}
+
+	public int getY0() {
+		return y0;
+	}
+
+	public void setY0(int y0) {
+		this.y0 = y0;
+	}
+
+	public int getY1() {
+		return y1;
+	}
+
+	public void setY1(int y1) {
+		this.y1 = y1;
+	}
+
+	public Hit getArma() {
+		return arma;
+	}
+
+	public void setArma(Hit arma) {
+		this.arma = arma;
+	}
+
+	
+	
+	// metodo que atualiza a posição do objeto
+	public void mover (int x, int y, int largura, int altura, boolean direcao){
+		
+		if (direcao) {
+			this.setX0(x);
+			this.setX1(x + largura);
+			this.setY0(y);
+			this.setY1(y+altura);
+
+			arma.setX0(x1);
+			arma.setX1(x1 + largura / 2);
+			arma.setY0(y0);
+			arma.setY1(y1);
+		}
+		
+		else {
+			this.setX0(x + largura / 2);
+			this.setX1(x + largura);
+			this.setY0(y);
+			this.setY1(y + altura);
+
+			arma.setX0(x);
+			arma.setX1(x + largura / 2);
+			arma.setY0(y); 
+			arma.setY1(y + altura);
+		}
+		
+	}
+	
+	public void mover (int x, int y, int largura, int altura){
+		this.setX0(x);
+		this.setX1(x + largura); 
+		this.setY0(y);
+		this.setY1(y + altura);
+
+				
+	}
+	
+	//metodo que indentifica o contato entre dois objetos
+	public Boolean dano (Hit b){
+		double w = ((x1-x0) + (b.x1 - b.x0)) / 2;
+		double h = ((y1-y0) + (b.y1 - b.y0)) / 2;
+		double dx = ((x1 + x0) - (b.x1 + b.x0)) / 2;
+		double dy = ((y1 + y0) - (b.y1 + b.y0)) / 2;
+		if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
+			double wy = w * dy; double hx = h * dx;
+			if (wy > hx) {
+				if (wy > -hx) return true;
+				else return true;
+			} else {
+				if (wy > -hx) return true;
+				else return true;
+			}
+		}
+		return false;
+	}
+}

@@ -1,0 +1,111 @@
+package Jogo2D;
+
+
+import javax.swing.*;
+
+
+
+public class MonstroOrc extends JLabel  {
+
+	//Atributos que definem a imagem do monstro
+	ImageIcon imagemCorrendoDireita =new ImageIcon (getClass().getResource("Orc Pançudo Correndo Direita.gif"));
+	ImageIcon imagemCorrendoEsquerda =new ImageIcon (getClass().getResource("Orc Pançudo Correndo Esquerda.gif"));
+	ImageIcon imagemParadoDireita =new ImageIcon (getClass().getResource("Orc Pançudo Parado Direita.gif"));
+	ImageIcon imagemParadoEsqueda =new ImageIcon (getClass().getResource("Orc Pançudo Parado Esquerda.gif"));
+
+
+	
+	private int largura, altura, vida, posx, posy, direcaoX, velocidade;
+	private Hit hitbox = new Hit();
+
+
+
+	//metodo construtor do monstro
+	public MonstroOrc(int x, int y) {
+
+		largura = 32;
+		altura = 34;
+
+		posx = (x);
+		posy = (y);
+		direcaoX = 0;
+		velocidade = 1;
+		
+		setIcon(imagemParadoDireita);
+		setBounds(posx, posy, largura, altura);
+		this.hitbox.mover(x, y, largura, altura);
+	}
+
+
+	
+	public Hit getHitbox() {
+		return hitbox;
+	}
+	public void setHitbox(Hit hitbox) {
+		this.hitbox = hitbox;
+	}
+	
+	
+	// metodo que permite o monstro perseguir o heroi
+	public void perseguir (int x,int y) {
+
+		int somaX = 0;
+		int somaY = 0;
+		
+		if (x <posx) {
+			somaX = - velocidade;
+			direcaoX = -1;
+			setIcon(imagemCorrendoEsquerda);
+
+
+		}
+
+		if (x >posx) {
+
+			somaX = + velocidade;
+			direcaoX = 1;
+			setIcon(imagemCorrendoDireita);
+
+		}
+		if (y <posy) {
+
+			somaY = - velocidade;
+
+
+		}
+
+		if (y >posy) {
+
+			somaY= + velocidade;
+
+
+		}
+
+		posx += somaX;
+		posy += somaY;
+
+		setBounds(posx, posy, largura, altura);
+
+
+		if (direcaoX == 1) {
+
+			setIcon(imagemParadoDireita);
+		}
+		else  setIcon(imagemParadoDireita);
+	}
+
+
+	public void atualiza(int x, int y) {
+
+		setBounds(posx, posy, largura, altura);
+		hitbox.mover(posx, posy, largura, altura);
+		perseguir(x,y);
+
+	}
+
+
+
+
+
+
+}
