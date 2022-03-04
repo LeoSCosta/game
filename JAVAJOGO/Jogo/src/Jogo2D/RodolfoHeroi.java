@@ -3,6 +3,7 @@ package Jogo2D;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Objects;
 
 import javax.swing.*;
 
@@ -11,15 +12,24 @@ import javax.swing.*;
 public class RodolfoHeroi extends JLabel implements KeyListener  {
 
 
-	ImageIcon imagemCorrendoDireita =new ImageIcon (getClass().getResource("GIf_Kin_Run_Direita.gif"));
-	ImageIcon imagemCorrendoEsquerda =new ImageIcon (getClass().getResource("GIf_Kin_Run_Esquerda.gif"));
-	ImageIcon imagemParadoDireita =new ImageIcon (getClass().getResource("GIf_Kin_Parado_Direita.gif"));
-	ImageIcon imagemParadoEsqueda = new ImageIcon (getClass().getResource("GIf_Kin_Parado_Esquerda.gif"));
-	ImageIcon imagemATKDireita = new ImageIcon (getClass().getResource("GIf_Kin_ATK_Direita.gif"));
-	ImageIcon imagemATKEsqueda = new ImageIcon (getClass().getResource("GIf_Kin_ATK_Esquerda.gif"));
+	ImageIcon imagemCorrendoDireita =new ImageIcon (Objects.requireNonNull(getClass().getResource("GIf_Kin_Run_Direita.gif")));
+	ImageIcon imagemCorrendoEsquerda =new ImageIcon (Objects.requireNonNull(getClass().getResource("GIf_Kin_Run_Esquerda.gif")));
+	ImageIcon imagemParadoDireita =new ImageIcon (Objects.requireNonNull(getClass().getResource("GIf_Kin_Parado_Direita.gif")));
+	ImageIcon imagemParadoEsqueda = new ImageIcon (Objects.requireNonNull(getClass().getResource("GIf_Kin_Parado_Esquerda.gif")));
+	ImageIcon imagemATKDireita = new ImageIcon (Objects.requireNonNull(getClass().getResource("GIf_Kin_ATK_Direita.gif")));
+	ImageIcon imagemATKEsqueda = new ImageIcon (Objects.requireNonNull(getClass().getResource("GIf_Kin_ATK_Esquerda.gif")));
 
 
-	private int largura,i, altura, posx, posy, ultimaDirecao, velocidade, somaX = 0, somaY = 0, vida, contatacando;
+	private final int largura;
+	private int i;
+	private final int altura;
+	private int posx;
+	private int posy;
+	private int ultimaDirecao;
+	private final int velocidade;
+	private int somaX = 0;
+	private int somaY = 0;
+	private int vida;
 	private boolean atacando;
 
 	// O heroi possui uma arma, entao temos dois hitBox para ele, uma para arma e uma para ele
@@ -39,7 +49,7 @@ public class RodolfoHeroi extends JLabel implements KeyListener  {
 
 		this.ultimaDirecao = 1;
 		this.velocidade =5;
-		this.contatacando = 0;
+
 
 		setIcon(imagemParadoDireita);
 		setBounds(posx, posy, largura, altura);
@@ -52,39 +62,22 @@ public class RodolfoHeroi extends JLabel implements KeyListener  {
 	public Hit getHitBox() {
 		return hitBox;
 	}
-	public void setHitBox(Hit hitBox) {
-		this.hitBox = hitBox;
-	}
 	public int getPosx() {
 		return posx;
-	}
-	public void setPosx(int posx) {
-		this.posx = posx;
 	}
 	public int getPosy() {
 		return posy;
 	}
-	public void setPosy(int posy) {
-		this.posy = posy;
-	}
 	public Hit getArma() {
 		return arma;
-	}
-	public void setArma(Hit arma) {
-		this.arma = arma;
 	}
 	public boolean isAtacando() {
 		return atacando;
 	}
-	public void setAtacando(boolean atacando) {
-		this.atacando = atacando;
-	}
 	public int getVida() {
 		return vida;
 	}
-	public void setVida(int vida) {
-		this.vida = vida;
-	}
+
 	
 
 
@@ -119,11 +112,6 @@ public class RodolfoHeroi extends JLabel implements KeyListener  {
 	}
 
 	// metodos que indentificam as teclas pressionadas
-
-
-	
-
-
 	public void keyPressed(KeyEvent a){
 
 		if (a.getKeyCode () == KeyEvent.VK_SPACE) {
@@ -192,7 +180,6 @@ public class RodolfoHeroi extends JLabel implements KeyListener  {
 
 		}
 		if (a.getKeyCode () == KeyEvent.VK_RIGHT) {
-			contatacando =0;
 			setIcon(imagemParadoDireita);
 			somaX = 0;
 		}
@@ -209,19 +196,9 @@ public class RodolfoHeroi extends JLabel implements KeyListener  {
 
 
 	@Override
-	public void keyTyped(KeyEvent a) {	
-
-
-		System.out.print("PORRAAAAA");
-
-
-	}
-
-
+	public void keyTyped(KeyEvent a) {}
 
 	public void recuar (int x,int y) {
-
-
 		int somaX = 0;
 		int somaY = 0;
 
@@ -244,10 +221,6 @@ public class RodolfoHeroi extends JLabel implements KeyListener  {
 		posx += somaX;
 		posy += somaY;
 
-
-
-
-
 	}
 
 	public void manterMapa() {
@@ -265,14 +238,8 @@ public class RodolfoHeroi extends JLabel implements KeyListener  {
 		}
 	}
 
-	public void atacar() {
-
-	}
-
 	//metodo que atualiza a situação do heroi no jogo
 	public void atualiza(boolean d, boolean o, boolean z, boolean z2) {
-
-		System.out.println(posx + " , " + posy);
 
 		manterMapa();
 		setBounds(posx, posy, largura, altura);

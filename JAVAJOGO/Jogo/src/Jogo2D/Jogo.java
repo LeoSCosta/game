@@ -5,6 +5,8 @@ package Jogo2D;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import java.awt.Font;
+import java.util.Objects;
 
 
 public class Jogo extends JFrame implements Runnable{
@@ -18,21 +20,23 @@ public class Jogo extends JFrame implements Runnable{
 	private boolean danoZ, danoArmaZ;
 	private boolean danoZ2, danoArmaZ2;
 	private boolean danoO, danoArmaO;
-	private int pontuacao;
 	private JLabel placar;
-	private JLabel vida;
-	private JLabel gameOver;
-	private ImageIcon zero;
-	private ImageIcon um;
-	private ImageIcon dois;
-	private ImageIcon tres;
-	private ImageIcon quatro;
-	private ImageIcon cinco;
-	private ImageIcon igameOver;
+	private final JLabel vida;
+	private final JLabel gameOver;
+	private final ImageIcon zero;
+	private final ImageIcon um;
+	private final ImageIcon dois;
+	private final ImageIcon tres;
+	private final ImageIcon quatro;
+	private final ImageIcon cinco;
+	private final ImageIcon igameOver;
 
 	public Jogo()	{
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+
+
 		
 		Cenario1 = new Cenario();
 		
@@ -49,15 +53,15 @@ public class Jogo extends JFrame implements Runnable{
 		gameOver = new JLabel();
 		gameOver.setBounds(0, 0, 800, 400);
 		
-		zero = new ImageIcon(getClass().getResource("0.jpeg"));
-		um = new ImageIcon(getClass().getResource("1.jpeg"));
-		dois = new ImageIcon(getClass().getResource("2.jpeg"));
-		tres = new ImageIcon(getClass().getResource("3.jpeg"));
-		quatro = new ImageIcon(getClass().getResource("4.jpeg"));
-		cinco = new ImageIcon(getClass().getResource("5.jpeg"));       
-		igameOver= new ImageIcon(getClass().getResource("GameOver.png")); 
-		janela( );
-		addobjetos ();
+		zero = new ImageIcon(Objects.requireNonNull(getClass().getResource("0.jpeg")));
+		um = new ImageIcon(Objects.requireNonNull(getClass().getResource("1.jpeg")));
+		dois = new ImageIcon(Objects.requireNonNull(getClass().getResource("2.jpeg")));
+		tres = new ImageIcon(Objects.requireNonNull(getClass().getResource("3.jpeg")));
+		quatro = new ImageIcon(Objects.requireNonNull(getClass().getResource("4.jpeg")));
+		cinco = new ImageIcon(Objects.requireNonNull(getClass().getResource("5.jpeg")));
+		igameOver= new ImageIcon(Objects.requireNonNull(getClass().getResource("GameOver.png")));
+
+		addobjetos();
 		addKeyListener(Rodolfo);
 		Thread t = new Thread(this);
 		t.start();
@@ -70,13 +74,11 @@ public class Jogo extends JFrame implements Runnable{
 		//RODOLFO_________________________________________________________________________
 
 		Rodolfo.atualiza(danoD, danoO, danoZ, danoZ2);
-		pontuacao = Demonio.getPonto() + orc1.getPonto() + Zumbi.getPonto() + Zumbi2.getPonto();
-		placar.setText( "Mortes: " + Integer.toString( pontuacao));	
+		int pontuacao = Demonio.getPonto() + orc1.getPonto() + Zumbi.getPonto() + Zumbi2.getPonto();
+		placar.setText( "Mortes: " + pontuacao);
 		jVida();
+
 		
-
-
-
 
 		//ZUMBI______________________________________________________________________
 
@@ -91,8 +93,6 @@ public class Jogo extends JFrame implements Runnable{
 		if(Rodolfo.isAtacando()) {
 			if(Rodolfo.getArma().dano(Zumbi.getHitbox())){
 				danoArmaZ = true;
-				System.out.println("CONTATOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-
 			}
 		}
 		else danoArmaZ = false;
@@ -110,17 +110,10 @@ public class Jogo extends JFrame implements Runnable{
 		if(Rodolfo.isAtacando()) {
 			if(Rodolfo.getArma().dano(Zumbi2.getHitbox())){
 				danoArmaZ2 = true;
-				System.out.println("CONTATOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 
 			}
 		}
 		else danoArmaZ2 = false;		
-
-
-
-
-
-
 
 		// Demonio______________________________________________________________________
 
@@ -135,7 +128,6 @@ public class Jogo extends JFrame implements Runnable{
 		if(Rodolfo.isAtacando()) {
 			if(Rodolfo.getArma().dano(Demonio.getHitbox())){
 				danoArmaD = true;
-				System.out.println("CONTATOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 
 			}
 		}
@@ -160,8 +152,6 @@ public class Jogo extends JFrame implements Runnable{
 		if(Rodolfo.isAtacando()) {
 			if(Rodolfo.getArma().dano(orc1.getHitbox())){
 				danoArmaO = true;
-				System.out.println("CONTATOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-
 			}
 		}
 		else danoArmaO = false;
@@ -199,7 +189,7 @@ public class Jogo extends JFrame implements Runnable{
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-		placar.setFont(new java.awt.Font("Bodoni MT Condensed", 3, 24)); // NOI18N
+		placar.setFont(new java.awt.Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 24)); // NOI18N
 		placar.setText("jLabel1");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,26 +218,19 @@ public class Jogo extends JFrame implements Runnable{
 	public  void addobjetos () {
 		add(Zumbi);
 		add(vida);
-		add(gameOver);
 		initComponents();
 		add(Zumbi2);
 		add(Demonio);
 		add(orc1);
 		add(Rodolfo);
+		add(gameOver);
 		add(Cenario1);
 
 	}
 
 
 
-	public void janela( ) {
 
-		setDefaultCloseOperation (EXIT_ON_CLOSE);
-		setSize(800,400);
-		setVisible(true);
-		setLayout(null);
-
-	}
 
 
 
@@ -258,7 +241,6 @@ public class Jogo extends JFrame implements Runnable{
 			try {
 				Thread.sleep((long) milisegundo);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
